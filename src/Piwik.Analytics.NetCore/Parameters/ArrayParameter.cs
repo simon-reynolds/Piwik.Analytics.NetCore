@@ -19,7 +19,7 @@ namespace Piwik.Analytics.NetCore.Parameters
 
         public override string Serialize()
         {
-            if (_values == null) return string.Empty;
+            if (_values == null || _values.Length == 0) return string.Empty;
 
             var parameter = string.Empty;
             if (_inline)
