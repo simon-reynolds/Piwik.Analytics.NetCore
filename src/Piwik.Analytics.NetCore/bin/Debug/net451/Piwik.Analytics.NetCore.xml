@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Piwik.Analytics.NetCore</name>
+    </assembly>
+    <members>
+        <member name="T:Piwik.Analytics.NetCore.Modules.Actions">
+            <summary>
+                Service Gateway for Piwik Actions Module API
+                For more information, see http://piwik.org/docs/analytics-api/reference
+            </summary>
+            <remarks>
+                This Analytics API is tested against Piwik 1.5
+            </remarks>
+        </member>
+        <member name="T:Piwik.Analytics.NetCore.Modules.Referers">
+            <summary>
+                Service Gateway for Piwik Referers Module API
+                For more information, see http://piwik.org/docs/analytics-api/reference
+            </summary>
+            <remarks>
+                This Analytics API is tested against Piwik 1.5
+            </remarks>
+        </member>
+        <member name="T:Piwik.Analytics.NetCore.Modules.ScheduledReports">
+            <summary>
+                Service Gateway for Piwik ScheduledReports Module API
+                For more information, see http://piwik.org/docs/analytics-api/reference
+            </summary>
+            <remarks>
+                This Analytics API is tested against Piwik 2.13.1
+                Implementation missing for ScheduledReports.getReports, ScheduledReports.generateReport and
+                ScheduledReports.sendReport
+            </remarks>
+        </member>
+        <member name="T:Piwik.Analytics.NetCore.Modules.ScheduledReports.ReportFormat">
+            <summary>
+                The format of the scheduled report
+            </summary>
+        </member>
+        <member name="T:Piwik.Analytics.NetCore.Modules.ScheduledReports.ReportType">
+            <summary>
+                The type of the scheduled report
+            </summary>
+        </member>
+        <member name="T:Piwik.Analytics.NetCore.Modules.ScheduledReports.Statistic">
+            <summary>
+                Enum of all available report statistics
+            </summary>
+        </member>
+        <member name="M:Piwik.Analytics.NetCore.Modules.ScheduledReports.addReport(System.Int32,System.String,Piwik.Analytics.NetCore.Date.PiwikPeriod,System.Int32,Piwik.Analytics.NetCore.Modules.ScheduledReports.ReportType,Piwik.Analytics.NetCore.Modules.ScheduledReports.ReportFormat,System.Collections.Generic.List{Piwik.Analytics.NetCore.Modules.ScheduledReports.Statistic},System.Boolean,System.String[])">
+            <summary>
+                Add a new scheduled report
+            </summary>
+            <param name="idSite">ID of the piwik site</param>
+            <param name="description">Description of the report</param>
+            <param name="period">A piwik period</param>
+            <param name="hour">Defines the hour at which the report will be sent</param>
+            <param name="reportType">The report type</param>
+            <param name="reportFormat">The report format</param>
+            <param name="includedStatistics">The included statistics</param>
+            <param name="emailMe">true if the report should be sent to the own user</param>
+            <param name="additionalEmails">A string array of additional email recipients</param>
+            <returns>The ID of the added report</returns>
+        </member>
+        <member name="M:Piwik.Analytics.NetCore.Modules.ScheduledReports.updateReport(System.Int32,System.Int32,System.String,Piwik.Analytics.NetCore.Date.PiwikPeriod,System.Int32,Piwik.Analytics.NetCore.Modules.ScheduledReports.ReportType,Piwik.Analytics.NetCore.Modules.ScheduledReports.ReportFormat,System.Collections.Generic.List{Piwik.Analytics.NetCore.Modules.ScheduledReports.Statistic},System.Boolean,System.String[])">
+            <summary>
+                Update an existing scheduled report
+            </summary>
+            <param name="idReport">The ID of the report to update</param>
+            <param name="idSite">ID of the piwik site</param>
+            <param name="description">Description of the report</param>
+            <param name="period">A piwik period</param>
+            <param name="hour">Defines the hour at which the report will be sent</param>
+            <param name="reportType">The report type</param>
+            <param name="reportFormat">The report format</param>
+            <param name="includedStatistics">The included statistics</param>
+            <param name="emailMe">true if the report should be sent to the own user</param>
+            <param name="additionalEmails">A string array of additional email recipients</param>
+            <returns>True if update was successful</returns>
+        </member>
+        <member name="M:Piwik.Analytics.NetCore.Modules.ScheduledReports.deleteReport(System.Int32)">
+            <summary>
+                Remove a scheduled report
+            </summary>
+            <param name="idReport">The ID of the report to delete</param>
+            <returns>True if the deletion was successful</returns>
+        </member>
+        <member name="T:Piwik.Analytics.NetCore.Modules.SitesManager">
+            <summary>
+                Service Gateway for Piwik SitesManager Module API
+                For more information, see http://piwik.org/docs/analytics-api/reference
+            </summary>
+            <remarks>
+                This Analytics API is tested against Piwik 1.5
+            </remarks>
+        </member>
+        <member name="M:Piwik.Analytics.NetCore.Modules.SitesManager.AddSite(System.String,System.String[],System.Boolean,System.String[],System.String[],System.String,System.String,System.String,System.DateTimeOffset)">
+            <summary>
+                Add a piwik site
+            </summary>
+            <param name="siteName"></param>
+            <param name="urls"></param>
+            <param name="ecommerce"></param>
+            <param name="excludedIps"></param>
+            <param name="excludedQueryParameters"></param>
+            <param name="timezone"></param>
+            <param name="currency"></param>
+            <param name="group"></param>
+            <param name="startDate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Piwik.Analytics.NetCore.Modules.SitesManager.DeleteSite(System.Int32)">
+            <summary>
+                Remove a Piwik site
+            </summary>
+            <param name="idSite"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Piwik.Analytics.NetCore.Modules.SitesManager.GetSitesIdFromSiteUrl(System.String)">
+            <summary>
+                Find sites from their URL
+            </summary>
+            <param name="url"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Piwik.Analytics.NetCore.Modules.SitesManager.GetSiteFromId(System.Int32)">
+            <summary>
+                Find a site from its id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Piwik.Analytics.NetCore.Modules.SitesManager.UpdateSite(System.Int32,System.String,System.String[],System.Boolean,System.String[],System.String[],System.String,System.String,System.String,System.DateTimeOffset)">
+            <summary>
+                Update a Piwik Site.
+                All the existing parameters need to be provided otherwise they will be erased from the database.
+            </summary>
+            <param name="idSite"></param>
+            <param name="siteName"></param>
+            <param name="urls"></param>
+            <param name="ecommerce"></param>
+            <param name="excludedIps"></param>
+            <param name="excludedQueryParameters"></param>
+            <param name="timezone"></param>
+            <param name="currency"></param>
+            <param name="group"></param>
+            <param name="startDate"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Piwik.Analytics.NetCore.Modules.UserSettings">
+            <summary>
+                Service Gateway for Piwik UserSettings Module API
+                For more information, see http://piwik.org/docs/analytics-api/reference
+            </summary>
+            <remarks>
+                This Analytics API is tested against Piwik 1.5
+            </remarks>
+        </member>
+        <member name="T:Piwik.Analytics.NetCore.Modules.VisitFrequency">
+            <summary>
+                Service Gateway for Piwik VisitFrequency Module API
+                For more information, see http://piwik.org/docs/analytics-api/reference
+            </summary>
+            <remarks>
+                This Analytics API is tested against Piwik 1.5
+            </remarks>
+        </member>
+    </members>
+</doc>
