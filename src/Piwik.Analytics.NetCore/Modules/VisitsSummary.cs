@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Piwik.Analytics.NetCore.Date;
+﻿using Piwik.Analytics.NetCore.Date;
 using Piwik.Analytics.NetCore.Parameters;
 
 namespace Piwik.Analytics.NetCore.Modules
@@ -36,7 +34,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new SimpleParameter("columns", columns)
             };
 
-            return SendRequest<Hashtable>("get", new List<Parameter>(parameters));
+            return SendRequest<Hashtable>("get", parameters);
         }
 
         public object GetVisits(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null)
@@ -51,10 +49,10 @@ namespace Piwik.Analytics.NetCore.Modules
 
             if (PiwikPeriod.IsMultipleDates(period, date))
             {
-                return SendRequest<Hashtable>("getVisits", new List<Parameter>(parameters));
+                return SendRequest<Hashtable>("getVisits", parameters);
             }
 
-            return SendRequest<ArrayList>("getVisits", new List<Parameter>(parameters));
+            return SendRequest<ArrayList>("getVisits", parameters);
         }
 
         public object GetUniqueVisitors(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null)
@@ -69,10 +67,10 @@ namespace Piwik.Analytics.NetCore.Modules
 
             if (PiwikPeriod.IsMultipleDates(period, date))
             {
-                return SendRequest<Hashtable>("getUniqueVisitors", new List<Parameter>(parameters));
+                return SendRequest<Hashtable>("getUniqueVisitors", parameters);
             }
 
-            return SendRequest<ArrayList>("getUniqueVisitors", new List<Parameter>(parameters));
+            return SendRequest<ArrayList>("getUniqueVisitors", parameters);
         }
     }
 }

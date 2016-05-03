@@ -5,8 +5,8 @@
 #endregion
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using Piwik.Analytics.NetCore.Parameters;
 
 /// <summary>
@@ -16,6 +16,36 @@ using Piwik.Analytics.NetCore.Parameters;
 
 namespace Piwik.Analytics.NetCore.Modules
 {
+    public class SiteIdResult
+    {
+        [JsonProperty(SitesManager.ID)]
+        public int SiteId { get; set; }
+    }
+    
+    public class SiteInfoResult
+    {
+        [JsonProperty(SitesManager.ID)]
+        public int SiteId { get; set; }
+        
+        [JsonProperty(SitesManager.NAME)]
+        public string Name { get; set; }
+        
+        [JsonProperty(SitesManager.MAIN_URL)]
+        public string MainUrl { get; set; }
+        
+        [JsonProperty(SitesManager.TS_CREATED)]
+        public string Created { get; set; }
+        
+        [JsonProperty(SitesManager.TIMEZONE)]
+        public string Timezone { get; set; }
+        
+        [JsonProperty(SitesManager.CURRENCY)]
+        public string Currency { get; set; }
+        
+        //TODo: complete class
+    }
+    
+    
     /// <summary>
     ///     Service Gateway for Piwik SitesManager Module API
     ///     For more information, see http://piwik.org/docs/analytics-api/reference
@@ -81,7 +111,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new DateParameter("startDate", startDate)
             };
 
-            return SendRequest<int>("addSite", new List<Parameter>(parameters));
+            return SendRequest<int>("addSite", parameters);
         }
 
         /// <summary>
@@ -96,7 +126,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new SimpleParameter("idSite", idSite)
             };
 
-            return SendRequest<bool>("deleteSite", new List<Parameter>(parameters));
+            return SendRequest<bool>("deleteSite", parameters);
         }
 
         /// <summary>
@@ -104,14 +134,21 @@ namespace Piwik.Analytics.NetCore.Modules
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public ArrayList GetSitesIdFromSiteUrl(string url)
+        public List<SiteIdResult> GetSitesIdFromSiteUrl(string url)
         {
             Parameter[] parameters =
             {
                 new SimpleParameter("url", url)
             };
 
-            return SendRequest<ArrayList>("getSitesIdFromSiteUrl", new List<Parameter>(parameters));
+            return SendRequest<List<SiteIdResult>>("getSitesIdFromSiteUrl", parameters);
+        }
+        
+        public List<Uri> GetSiteUrlsFromId(int siteId)
+        {
+            var parameter = new SimpleParameter("idSite", siteId);
+            
+            return SendRequest<List<Uri>>("getSiteUrlsFromId", parameter);
         }
 
         /// <summary>
@@ -119,14 +156,11 @@ namespace Piwik.Analytics.NetCore.Modules
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ArrayList GetSiteFromId(int id)
+        public List<SiteInfoResult> GetSiteFromId(int id)
         {
-            Parameter[] parameters =
-            {
-                new SimpleParameter("idSite", id)
-            };
+            var parameter = new SimpleParameter("idSite", id);
 
-            return SendRequest<ArrayList>("getSiteFromId", new List<Parameter>(parameters));
+            return SendRequest<List<SiteInfoResult>>("getSiteFromId", parameter);
         }
 
         /// <summary>
@@ -170,7 +204,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new DateParameter("startDate", startDate)
             };
 
-            return SendRequest<bool>("updateSite", new List<Parameter>(parameters));
+            return SendRequest<bool>("updateSite", parameters);
         }
     }
 }

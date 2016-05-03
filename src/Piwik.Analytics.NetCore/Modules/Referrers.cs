@@ -4,7 +4,6 @@
 
 #endregion
 
-using System.Collections;
 using System.Collections.Generic;
 using Piwik.Analytics.NetCore.Date;
 using Piwik.Analytics.NetCore.Parameters;
@@ -59,14 +58,14 @@ namespace Piwik.Analytics.NetCore.Modules
 
             if (PiwikPeriod.IsMultipleDates(period, date))
             {
-                var hash = SendRequest<Hashtable>("getWebsites", new List<Parameter>(parameters));
+                var hash = SendRequest<Hashtable>("getWebsites", parameters);
                 return new List<Hashtable> {hash};
             }
-            return SendRequest<ArrayList>("getWebsites", new List<Parameter>(parameters));
+            return SendRequest<ArrayList>("getWebsites", parameters);
         }
 
-        public object GetRefererType(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null,
-            RefererType refererType = null)
+        public object GetReferrerType(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null,
+            ReferrerType referrerType = null)
         {
             Parameter[] parameters =
             {
@@ -74,14 +73,14 @@ namespace Piwik.Analytics.NetCore.Modules
                 new PeriodParameter(period),
                 new PiwikDateParameter(date),
                 new SimpleParameter("segment", segment),
-                new RefererTypeParameter("typeReferer", refererType)
+                new ReferrerTypeParameter(referrerType)
             };
 
             if (PiwikPeriod.IsMultipleDates(period, date))
             {
-                return SendRequest<Hashtable>("getRefererType", new List<Parameter>(parameters));
+                return SendRequest<Hashtable>("getReferrerType", parameters);
             }
-            return SendRequest<ArrayList>("getRefererType", new List<Parameter>(parameters));
+            return SendRequest<ArrayList>("getReferrerType", parameters);
         }
     }
 }

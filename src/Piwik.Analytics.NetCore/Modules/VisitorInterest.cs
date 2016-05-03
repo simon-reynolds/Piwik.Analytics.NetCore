@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Piwik.Analytics.NetCore.Date;
+﻿using Piwik.Analytics.NetCore.Date;
 using Piwik.Analytics.NetCore.Parameters;
 
 namespace Piwik.Analytics.NetCore.Modules
@@ -30,9 +28,9 @@ namespace Piwik.Analytics.NetCore.Modules
 
             if (PiwikPeriod.IsMultipleDates(period, date))
             {
-                return SendRequest<Hashtable>("getNumberOfVisitsPerPage", new List<Parameter>(parameters));
+                return SendRequest<Hashtable>("getNumberOfVisitsPerPage", parameters);
             }
-            return SendRequest<ArrayList>("getNumberOfVisitsPerPage", new List<Parameter>(parameters));
+            return SendRequest<ArrayList>("getNumberOfVisitsPerPage", parameters);
         }
 
         public object GetNumberOfVisitsByVisitCount(int idSite, PiwikPeriod period, IPiwikDate date,
@@ -48,9 +46,9 @@ namespace Piwik.Analytics.NetCore.Modules
 
             if (PiwikPeriod.IsMultipleDates(period, date))
             {
-                return SendRequest<Hashtable>("getNumberOfVisitsByVisitCount ", new List<Parameter>(parameters));
+                return SendRequest<Hashtable>("getNumberOfVisitsByVisitCount ", parameters);
             }
-            return SendRequest<ArrayList>("getNumberOfVisitsByVisitCount ", new List<Parameter>(parameters));
+            return SendRequest<ArrayList>("getNumberOfVisitsByVisitCount ", parameters);
         }
     }
 }

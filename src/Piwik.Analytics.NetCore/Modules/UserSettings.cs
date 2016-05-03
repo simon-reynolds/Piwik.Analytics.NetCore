@@ -4,8 +4,6 @@
 
 #endregion
 
-using System.Collections;
-using System.Collections.Generic;
 using Piwik.Analytics.NetCore.Date;
 using Piwik.Analytics.NetCore.Parameters;
 
@@ -57,9 +55,9 @@ namespace Piwik.Analytics.NetCore.Modules
 
             if (PiwikPeriod.IsMultipleDates(period, date))
             {
-                return SendRequest<Hashtable>("getBrowser", new List<Parameter>(parameters));
+                return SendRequest<Hashtable>("getBrowser", parameters);
             }
-            return SendRequest<ArrayList>("getBrowser", new List<Parameter>(parameters));
+            return SendRequest<ArrayList>("getBrowser", parameters);
         }
 
         public object GetOs(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null)
@@ -74,9 +72,9 @@ namespace Piwik.Analytics.NetCore.Modules
 
             if (PiwikPeriod.IsMultipleDates(period, date))
             {
-                return SendRequest<Hashtable>("getOS", new List<Parameter>(parameters));
+                return SendRequest<Hashtable>("getOS", parameters);
             }
-            return SendRequest<ArrayList>("getOS", new List<Parameter>(parameters));
+            return SendRequest<ArrayList>("getOS", parameters);
         }
 
         public object GetMobileOS(int idSite, PiwikPeriod period, IPiwikDate date)

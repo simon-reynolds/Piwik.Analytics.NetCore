@@ -162,7 +162,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new DictionaryParameter("parameters", additionalParameters)
             };
 
-            return SendRequest<int>("addReport", new List<Parameter>(p));
+            return SendRequest<int>("addReport", p);
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new DictionaryParameter("parameters", additionalParameters)
             };
 
-            return SendRequest<bool>("updateReport", new List<Parameter>(p));
+            return SendRequest<bool>("updateReport", p);
         }
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new SimpleParameter("idReport", idReport)
             };
 
-            return SendRequest<bool>("deleteReport", new List<Parameter>(parameters));
+            return SendRequest<bool>("deleteReport", parameters);
         }
     }
 }

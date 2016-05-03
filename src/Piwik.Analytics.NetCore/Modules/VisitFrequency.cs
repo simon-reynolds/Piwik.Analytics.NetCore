@@ -4,7 +4,6 @@
 
 #endregion
 
-using System.Collections.Generic;
 using Piwik.Analytics.NetCore.Date;
 using Piwik.Analytics.NetCore.Parameters;
 using Newtonsoft.Json;
@@ -89,7 +88,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new SimpleParameter("segment", segment)
             };
 
-            return SendRequest<VisitFrequencyResult>("get", new List<Parameter>(parameters));
+            return SendRequest<VisitFrequencyResult>("get", parameters);
         }
     }
 }

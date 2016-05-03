@@ -28,7 +28,7 @@ namespace Piwik.Analytics.NetCore
             _tokenAuth = tokenAuth;
         }        
 
-        protected T SendRequest<T>(string method, List<Parameter> parameters)
+        protected T SendRequest<T>(string method, params Parameter[] parameters)
         {
             Contract.Requires<InvalidOperationException>(string.IsNullOrWhiteSpace(Url));
             Contract.EndContractBlock();
