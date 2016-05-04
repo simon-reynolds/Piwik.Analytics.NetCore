@@ -11,7 +11,7 @@ namespace Piwik.Analytics.NetCore
     public class PiwikApiException : Exception
     {
         public PiwikApiException(string message) : base(message)
-        {   
+        {
         }
         
         public PiwikApiException(string message, Exception ex) : base(message, ex)

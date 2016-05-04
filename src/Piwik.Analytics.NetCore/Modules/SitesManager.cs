@@ -6,8 +6,8 @@
 
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using Piwik.Analytics.NetCore.Parameters;
+using Piwik.Analytics.NetCore.Results;
 
 /// <summary>
 /// Piwik - Open source web analytics
@@ -16,36 +16,6 @@ using Piwik.Analytics.NetCore.Parameters;
 
 namespace Piwik.Analytics.NetCore.Modules
 {
-    public class SiteIdResult
-    {
-        [JsonProperty(SitesManager.ID)]
-        public int SiteId { get; set; }
-    }
-    
-    public class SiteInfoResult
-    {
-        [JsonProperty(SitesManager.ID)]
-        public int SiteId { get; set; }
-        
-        [JsonProperty(SitesManager.NAME)]
-        public string Name { get; set; }
-        
-        [JsonProperty(SitesManager.MAIN_URL)]
-        public string MainUrl { get; set; }
-        
-        [JsonProperty(SitesManager.TS_CREATED)]
-        public string Created { get; set; }
-        
-        [JsonProperty(SitesManager.TIMEZONE)]
-        public string Timezone { get; set; }
-        
-        [JsonProperty(SitesManager.CURRENCY)]
-        public string Currency { get; set; }
-        
-        //TODo: complete class
-    }
-    
-    
     /// <summary>
     ///     Service Gateway for Piwik SitesManager Module API
     ///     For more information, see http://piwik.org/docs/analytics-api/reference
@@ -55,18 +25,6 @@ namespace Piwik.Analytics.NetCore.Modules
     /// </remarks>
     public class SitesManager : PiwikAnalytics
     {
-        public const string ID = "idsite";
-        public const string NAME = "name";
-        public const string MAIN_URL = "main_url";
-        public const string TS_CREATED = "ts_created";
-        public const string TIMEZONE = "timezone";
-        public const string CURRENCY = "currency";
-        public const string EXCLUDED_IPS = "excluded_ips";
-        public const string EXCLUDED_PARAMETERS = "excluded_parameters";
-        public const string FEEDBURNER_NAME = "feedburnerName";
-        public const string GROUP = "group";
-        public const string ECOMMERCE = "ecommerce";
-
         private const string PLUGIN = "SitesManager";
 
         protected override string GetPlugin()

@@ -17,20 +17,35 @@ namespace Piwik.Analytics.NetCore
 {
     public abstract class PiwikAnalytics
     {
-        public static string Url;
+        public static void Initialize(string url, string tokenAuth)
+        {
+            Contract.Requires<ArgumentException>(!Uri.IsWellFormedUriString(url, UriKind.Absolute));
+            Contract.Requires<ArgumentException>(string.IsNullOrWhiteSpace(tokenAuth));
+            Contract.EndContractBlock();
+            
+            Initialize(new Uri(url), tokenAuth);
+        }
         
-        private string _tokenAuth;
+        public static void Initialize(Uri uri, string tokenAuth)
+        {
+            Contract.Requires<ArgumentException>(uri == null);
+            Contract.Requires<ArgumentException>(string.IsNullOrWhiteSpace(tokenAuth));
+            Contract.EndContractBlock();
+            
+            Url = uri;
+            _tokenAuth = tokenAuth;
+        }
+        
+        public static Uri Url { get; private set; }
+        
+        private static string _tokenAuth;
 
         protected abstract string GetPlugin();
 
-        public void SetTokenAuth(string tokenAuth)
-        {
-            _tokenAuth = tokenAuth;
-        }        
-
         protected T SendRequest<T>(string method, params Parameter[] parameters)
         {
-            Contract.Requires<InvalidOperationException>(string.IsNullOrWhiteSpace(Url));
+            Contract.Requires<InvalidOperationException>(Url == null);
+            Contract.Requires<InvalidOperationException>(string.IsNullOrWhiteSpace(_tokenAuth));
             Contract.EndContractBlock();
 
             var uri = BuildUri(method, parameters);
@@ -71,7 +86,7 @@ namespace Piwik.Analytics.NetCore
             return uriBuilder.Uri;
         }
         
-        private async Task<string> GetResponse(Uri uri)
+        private static async Task<string> GetResponse(Uri uri)
         {
             var wc = new HttpClient();
             var response = await wc.GetStringAsync(uri);
