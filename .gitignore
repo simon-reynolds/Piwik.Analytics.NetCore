@@ -1,8 +1,9 @@
-*/bin
+bin/
 */obj
 *.suo
 *.sln.dotsettings.user
 */*.csproj.dotsettings.user
 *.nupkg
 
+*/project.lock.json
 packages/
