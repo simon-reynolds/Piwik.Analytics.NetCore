@@ -3,8 +3,8 @@
   "description": "Piwik.Analytics.NetCore Class Library",
   "authors": [ "Simon Reynolds" ],
   "tags": [""],
-  "projectUrl": "",
-  "licenseUrl": "",
+  "projectUrl": "https://github.com/simonreynolds7/Piwik.Analytics.NetCore",
+  "licenseUrl": "https://www.gnu.org/licenses/gpl-3.0.en.html",
   "tooling": {
     "defaultNamespace": "Piwik.Analytics.NetCore"
   },
@@ -23,9 +23,7 @@
         "Microsoft.CSharp": "4.0.1-beta-23516",
         "System.Collections": "4.0.11-beta-23516",
         "System.Linq": "4.0.1-beta-23516",
-        "System.Net.Http": "4.0.1-beta-23516",
-        "System.Runtime": "4.0.21-beta-23516",
-        "System.Threading": "4.0.11-beta-23516"
+        "System.Net.Http": "4.0.1-beta-23516"
       }
     }
   }
