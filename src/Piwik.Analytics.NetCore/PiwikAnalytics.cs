@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -19,18 +18,30 @@ namespace Piwik.Analytics.NetCore
     {
         public static void Initialize(string url, string tokenAuth)
         {
-            Contract.Requires<ArgumentException>(!Uri.IsWellFormedUriString(url, UriKind.Absolute));
-            Contract.Requires<ArgumentException>(string.IsNullOrWhiteSpace(tokenAuth));
-            Contract.EndContractBlock();
+            if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
+            {
+                throw new ArgumentException(nameof(url), @"url must be well formed");
+            }
+            
+            if (string.IsNullOrWhiteSpace(tokenAuth))
+            {
+                throw new ArgumentException(nameof(tokenAuth), @"tokenAuth cannot be empty");
+            }
             
             Initialize(new Uri(url), tokenAuth);
         }
         
         public static void Initialize(Uri uri, string tokenAuth)
         {
-            Contract.Requires<ArgumentException>(uri == null);
-            Contract.Requires<ArgumentException>(string.IsNullOrWhiteSpace(tokenAuth));
-            Contract.EndContractBlock();
+            if (uri == null)
+            {
+                throw new ArgumentException(nameof(uri), @"uri cannot be null");
+            }
+            
+            if (string.IsNullOrWhiteSpace(tokenAuth))
+            {
+                throw new ArgumentException(nameof(tokenAuth), @"tokenAuth cannot be empty");
+            }
             
             Url = uri;
             _tokenAuth = tokenAuth;
@@ -44,10 +55,16 @@ namespace Piwik.Analytics.NetCore
 
         protected T SendRequest<T>(string method, params Parameter[] parameters)
         {
-            Contract.Requires<InvalidOperationException>(Url == null);
-            Contract.Requires<InvalidOperationException>(string.IsNullOrWhiteSpace(_tokenAuth));
-            Contract.EndContractBlock();
-
+            if (Url == null)
+            {
+                throw new ArgumentException(nameof(Url), @"Url cannot be null");
+            }
+            
+            if (string.IsNullOrWhiteSpace(_tokenAuth))
+            {
+                throw new ArgumentException(nameof(_tokenAuth), @"tokenAuth cannot be empty");
+            }
+            
             var uri = BuildUri(method, parameters);
 
             var response = GetResponse(uri).Result;
