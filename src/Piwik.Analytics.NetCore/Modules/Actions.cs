@@ -21,7 +21,7 @@ namespace Piwik.Analytics.NetCore.Modules
     ///     For more information, see http://piwik.org/docs/analytics-api/reference
     /// </summary>
     /// <remarks>
-    ///     This Analytics API is tested against Piwik 1.5
+    ///     This Analytics API is tested against Piwik 2.16
     /// </remarks>
     public class Actions : PiwikAnalytics
     {
