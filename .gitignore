@@ -5,5 +5,5 @@ bin/
 */*.csproj.dotsettings.user
 *.nupkg
 
-*/project.lock.json
 packages/
+src/Piwik.Analytics.NetCore/project.lock.json

@@ -7,6 +7,7 @@
 using System.Collections.Generic;
 using Piwik.Analytics.NetCore.Date;
 using Piwik.Analytics.NetCore.Parameters;
+using Piwik.Analytics.NetCore.Results;
 
 /// <summary>
 /// Piwik - Open source web analytics
@@ -22,22 +23,9 @@ namespace Piwik.Analytics.NetCore.Modules
     /// <remarks>
     ///     This Analytics API is tested against Piwik 1.5
     /// </remarks>
-    public class Referers : PiwikAnalytics
+    public class Referrers : PiwikAnalytics
     {
-        public const string LABEL = "label";
-        public const string NB_UNIQ_VISITORS = "nb_uniq_visitors";
-        public const string NB_VISITS = "nb_visits";
-        public const string NB_ACTIONS = "nb_actions";
-        public const string MAX_ACTIONS = "max_actions";
-        public const string SUM_VISIT_LENGTH = "sum_visit_length";
-        public const string BOUNCE_COUNT = "bounce_count";
-        public const string NB_VISITS_CONVERTED = "nb_visits_converted";
-        public const string IDSUBDATATABLE = "idsubdatatable";
-        public const string NB_CONVERSIONS = "nb_conversions";
-        public const string REVENUE = "revenue";
-        public const string SUBTABLE = "subtable";
-
-        private const string PLUGIN = "Referers";
+        private const string PLUGIN = "Referers"; // API name is misspelt, this is not a typo
 
         protected override string GetPlugin()
         {
@@ -56,12 +44,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new SimpleParameter("expanded", expanded)
             };
 
-            if (PiwikPeriod.IsMultipleDates(period, date))
-            {
-                var hash = SendRequest<Hashtable>("getWebsites", parameters);
-                return new List<Hashtable> {hash};
-            }
-            return SendRequest<ArrayList>("getWebsites", parameters);
+            return SendRequest<List<ReferrerWesbite>>("getWebsites", parameters);
         }
 
         public object GetReferrerType(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null,
@@ -76,11 +59,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new ReferrerTypeParameter(referrerType)
             };
 
-            if (PiwikPeriod.IsMultipleDates(period, date))
-            {
-                return SendRequest<Hashtable>("getReferrerType", parameters);
-            }
-            return SendRequest<ArrayList>("getReferrerType", parameters);
+            return SendRequest<List<ReferrerType>>("getReferrerType", parameters);
         }
     }
 }

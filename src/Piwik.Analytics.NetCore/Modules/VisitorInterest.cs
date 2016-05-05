@@ -1,14 +1,12 @@
-﻿using Piwik.Analytics.NetCore.Date;
+﻿using System.Collections.Generic;
+using Piwik.Analytics.NetCore.Date;
 using Piwik.Analytics.NetCore.Parameters;
+using Piwik.Analytics.NetCore.Results;
 
 namespace Piwik.Analytics.NetCore.Modules
 {
     public class VisitorInterest : PiwikAnalytics
     {
-        public const string LABEL = "label";
-        public const string NB_VISITS = "nb_visits";
-        public const string NB_VISITS_PERCENTAGE = "nb_visits_percentage";
-
         private const string PLUGIN = "VisitorInterest";
 
         protected override string GetPlugin()
@@ -16,7 +14,7 @@ namespace Piwik.Analytics.NetCore.Modules
             return PLUGIN;
         }
 
-        public object GetNumberOfVisitsPerPage(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null)
+        public List<VisitsPerPage> GetNumberOfVisitsPerPage(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null)
         {
             Parameter[] parameters =
             {
@@ -26,14 +24,10 @@ namespace Piwik.Analytics.NetCore.Modules
                 new SimpleParameter("segment", segment)
             };
 
-            if (PiwikPeriod.IsMultipleDates(period, date))
-            {
-                return SendRequest<Hashtable>("getNumberOfVisitsPerPage", parameters);
-            }
-            return SendRequest<ArrayList>("getNumberOfVisitsPerPage", parameters);
+            return SendRequest<List<VisitsPerPage>>("getNumberOfVisitsPerPage", parameters);
         }
 
-        public object GetNumberOfVisitsByVisitCount(int idSite, PiwikPeriod period, IPiwikDate date,
+        public List<VisitsPerVisitCount> GetNumberOfVisitsByVisitCount(int idSite, PiwikPeriod period, IPiwikDate date,
             string segment = null)
         {
             Parameter[] parameters =
@@ -44,11 +38,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new SimpleParameter("segment", segment)
             };
 
-            if (PiwikPeriod.IsMultipleDates(period, date))
-            {
-                return SendRequest<Hashtable>("getNumberOfVisitsByVisitCount ", parameters);
-            }
-            return SendRequest<ArrayList>("getNumberOfVisitsByVisitCount ", parameters);
+            return SendRequest<List<VisitsPerVisitCount>>("getNumberOfVisitsByVisitCount ", parameters);
         }
     }
 }

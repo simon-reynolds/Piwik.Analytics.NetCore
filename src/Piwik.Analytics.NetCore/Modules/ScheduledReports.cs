@@ -131,7 +131,7 @@ namespace Piwik.Analytics.NetCore.Modules
         /// <param name="emailMe">true if the report should be sent to the own user</param>
         /// <param name="additionalEmails">A string array of additional email recipients</param>
         /// <returns>The ID of the added report</returns>
-        public int addReport(
+        public int AddReport(
             int idSite,
             string description,
             PiwikPeriod period,
@@ -179,7 +179,7 @@ namespace Piwik.Analytics.NetCore.Modules
         /// <param name="emailMe">true if the report should be sent to the own user</param>
         /// <param name="additionalEmails">A string array of additional email recipients</param>
         /// <returns>True if update was successful</returns>
-        public bool updateReport(
+        public bool UpdateReport(
             int idReport,
             int idSite,
             string description,
@@ -220,7 +220,7 @@ namespace Piwik.Analytics.NetCore.Modules
         /// </summary>
         /// <param name="idReport">The ID of the report to delete</param>
         /// <returns>True if the deletion was successful</returns>
-        public bool deleteReport(int idReport)
+        public bool DeleteReport(int idReport)
         {
             Parameter[] parameters =
             {
