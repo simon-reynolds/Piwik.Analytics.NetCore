@@ -7,3 +7,4 @@ bin/
 
 packages/
 src/Piwik.Analytics.NetCore/project.lock.json
+test/Piwik.Analytics.NetCore.Tests/project.lock.json
