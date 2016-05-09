@@ -32,7 +32,7 @@ namespace Piwik.Analytics.NetCore.Modules
             return PLUGIN;
         }
 
-        public object GetPageUrls(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null)
+        public List<ActionResult> GetPageUrls(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null)
         {
             Parameter[] parameters =
             {
@@ -46,7 +46,7 @@ namespace Piwik.Analytics.NetCore.Modules
 
         }
 
-        public object GetPageTitles(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null)
+        public List<ActionResult> GetPageTitles(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null)
         {
             Parameter[] parameters =
             {

@@ -9,7 +9,7 @@
       "defaultNamespace": "Piwik.Analytics.NetCore.Tests"
     },
     "dependencies": {
-        "Piwik.Analytics.NetCore": "0.1.0",
+        "Piwik.Analytics.NetCore": "0.1.1",
         "xunit": "2.1.0",
         "xunit.runner.dnx": "2.1.0-rc1-build204"
     },

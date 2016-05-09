@@ -32,7 +32,7 @@ namespace Piwik.Analytics.NetCore.Modules
             return PLUGIN;
         }
 
-        public object GetWebsites(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null,
+        public List<ReferrerWesbite> GetWebsites(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null,
             bool expanded = false)
         {
             Parameter[] parameters =
@@ -47,7 +47,7 @@ namespace Piwik.Analytics.NetCore.Modules
             return SendRequest<List<ReferrerWesbite>>("getWebsites", parameters);
         }
 
-        public object GetReferrerType(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null,
+        public List<ReferrerType> GetReferrerType(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null,
             ReferrerType referrerType = null)
         {
             Parameter[] parameters =
