@@ -4,7 +4,7 @@
 
 #endregion
 
-using Microsoft.Extensions.WebEncoders;
+using System.Text.Encodings.Web;
 
 namespace Piwik.Analytics.NetCore.Parameters
 {
@@ -21,7 +21,7 @@ namespace Piwik.Analytics.NetCore.Parameters
 
         protected static string UrlEncode(string value)
         {
-            return UrlEncoder.Default.UrlEncode(value);
+            return UrlEncoder.Default.Encode(value);
         }
     }
 }
