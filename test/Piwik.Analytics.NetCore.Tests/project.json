@@ -2,7 +2,7 @@
     "testRunner": "xunit",
     "dependencies": {
         "Microsoft.NETCore.App": {
-            "version": "1.0.0-rc2-3002702",
+            "version": "1.0.0",
             "type": "platform"
         },
         "Piwik.Analytics.NetCore": "0.1.2",
