@@ -6,6 +6,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Piwik.Analytics.NetCore.Date;
 using Piwik.Analytics.NetCore.Parameters;
 
@@ -131,7 +132,7 @@ namespace Piwik.Analytics.NetCore.Modules
         /// <param name="emailMe">true if the report should be sent to the own user</param>
         /// <param name="additionalEmails">A string array of additional email recipients</param>
         /// <returns>The ID of the added report</returns>
-        public int AddReport(
+        public async Task<int> AddReportAsync(
             int idSite,
             string description,
             PiwikPeriod period,
@@ -162,7 +163,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new DictionaryParameter("parameters", additionalParameters)
             };
 
-            return SendRequest<int>("addReport", p);
+            return await SendRequestAsync<int>("addReport", p);
         }
 
         /// <summary>
@@ -179,7 +180,7 @@ namespace Piwik.Analytics.NetCore.Modules
         /// <param name="emailMe">true if the report should be sent to the own user</param>
         /// <param name="additionalEmails">A string array of additional email recipients</param>
         /// <returns>True if update was successful</returns>
-        public bool UpdateReport(
+        public async Task<bool> UpdateReportAsync(
             int idReport,
             int idSite,
             string description,
@@ -212,7 +213,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new DictionaryParameter("parameters", additionalParameters)
             };
 
-            return SendRequest<bool>("updateReport", p);
+            return await SendRequestAsync<bool>("updateReport", p);
         }
 
         /// <summary>
@@ -220,14 +221,14 @@ namespace Piwik.Analytics.NetCore.Modules
         /// </summary>
         /// <param name="idReport">The ID of the report to delete</param>
         /// <returns>True if the deletion was successful</returns>
-        public bool DeleteReport(int idReport)
+        public async Task<bool> DeleteReportAsync(int idReport)
         {
             Parameter[] parameters =
             {
                 new SimpleParameter("idReport", idReport)
             };
 
-            return SendRequest<bool>("deleteReport", parameters);
+            return await SendRequestAsync<bool>("deleteReport", parameters);
         }
     }
 }

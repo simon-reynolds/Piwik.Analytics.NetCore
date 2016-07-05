@@ -1,4 +1,5 @@
-﻿using Piwik.Analytics.NetCore.Date;
+﻿using System.Threading.Tasks;
+using Piwik.Analytics.NetCore.Date;
 using Piwik.Analytics.NetCore.Parameters;
 using Piwik.Analytics.NetCore.Results;
 
@@ -13,7 +14,7 @@ namespace Piwik.Analytics.NetCore.Modules
             return PLUGIN;
         }
 
-        public VisitSummary Get(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null,
+        public async Task<VisitSummary> GetAsync(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null,
             string columns = null)
         {
             Parameter[] parameters =
@@ -25,10 +26,10 @@ namespace Piwik.Analytics.NetCore.Modules
                 new SimpleParameter("columns", columns)
             };
 
-            return SendRequest<VisitSummary>("get", parameters);
+            return await SendRequestAsync<VisitSummary>("get", parameters);
         }
 
-        public TotalVisits GetVisits(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null)
+        public async Task<TotalVisits> GetVisitsAsync(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null)
         {
             Parameter[] parameters =
             {
@@ -38,10 +39,10 @@ namespace Piwik.Analytics.NetCore.Modules
                 new SimpleParameter("segment", segment)
             };
 
-            return SendRequest<TotalVisits>("getVisits", parameters);
+            return await SendRequestAsync<TotalVisits>("getVisits", parameters);
         }
 
-        public UniqueVisitors GetUniqueVisitors(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null)
+        public async Task<UniqueVisitors> GetUniqueVisitorsAsync(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null)
         {
             Parameter[] parameters =
             {
@@ -51,7 +52,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new SimpleParameter("segment", segment)
             };
 
-            return SendRequest<UniqueVisitors>("getUniqueVisitors", parameters);
+            return await SendRequestAsync<UniqueVisitors>("getUniqueVisitors", parameters);
         }
     }
 }

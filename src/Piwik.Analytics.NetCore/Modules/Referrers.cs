@@ -5,6 +5,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Piwik.Analytics.NetCore.Date;
 using Piwik.Analytics.NetCore.Parameters;
 using Piwik.Analytics.NetCore.Results;
@@ -32,7 +33,7 @@ namespace Piwik.Analytics.NetCore.Modules
             return PLUGIN;
         }
 
-        public List<ReferrerWesbite> GetWebsites(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null,
+        public async Task<List<ReferrerWesbite>> GetWebsitesAsync(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null,
             bool expanded = false)
         {
             Parameter[] parameters =
@@ -44,10 +45,10 @@ namespace Piwik.Analytics.NetCore.Modules
                 new SimpleParameter("expanded", expanded)
             };
 
-            return SendRequest<List<ReferrerWesbite>>("getWebsites", parameters);
+            return await SendRequestAsync<List<ReferrerWesbite>>("getWebsites", parameters);
         }
 
-        public List<ReferrerType> GetReferrerType(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null,
+        public async Task<List<ReferrerType>> GetReferrerType(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null,
             ReferrerType referrerType = null)
         {
             Parameter[] parameters =
@@ -59,7 +60,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new ReferrerTypeParameter(referrerType)
             };
 
-            return SendRequest<List<ReferrerType>>("getReferrerType", parameters);
+            return await SendRequestAsync<List<ReferrerType>>("getReferrerType", parameters);
         }
     }
 }

@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Piwik.Analytics.NetCore.Parameters;
 using Piwik.Analytics.NetCore.Results;
 
@@ -45,7 +46,7 @@ namespace Piwik.Analytics.NetCore.Modules
         /// <param name="group"></param>
         /// <param name="startDate"></param>
         /// <returns></returns>
-        public int AddSite(
+        public async Task<int> AddSiteAsync(
             string siteName,
             string[] urls,
             bool ecommerce = false,
@@ -69,7 +70,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new DateParameter("startDate", startDate)
             };
 
-            return SendRequest<int>("addSite", parameters);
+            return await SendRequestAsync<int>("addSite", parameters);
         }
 
         /// <summary>
@@ -77,14 +78,14 @@ namespace Piwik.Analytics.NetCore.Modules
         /// </summary>
         /// <param name="idSite"></param>
         /// <returns></returns>
-        public bool DeleteSite(int idSite)
+        public async Task<bool> DeleteSiteAsync(int idSite)
         {
             Parameter[] parameters =
             {
                 new SimpleParameter("idSite", idSite)
             };
 
-            return SendRequest<bool>("deleteSite", parameters);
+            return await SendRequestAsync<bool>("deleteSite", parameters);
         }
 
         /// <summary>
@@ -92,21 +93,21 @@ namespace Piwik.Analytics.NetCore.Modules
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public List<SiteIdResult> GetSitesIdFromSiteUrl(string url)
+        public async Task<List<SiteIdResult>> GetSitesIdFromSiteUrlAsync(string url)
         {
             Parameter[] parameters =
             {
                 new SimpleParameter("url", url)
             };
 
-            return SendRequest<List<SiteIdResult>>("getSitesIdFromSiteUrl", parameters);
+            return await SendRequestAsync<List<SiteIdResult>>("getSitesIdFromSiteUrl", parameters);
         }
-        
-        public List<Uri> GetSiteUrlsFromId(int siteId)
+
+        public async Task<List<Uri>> GetSiteUrlsFromIdAsync(int siteId)
         {
             var parameter = new SimpleParameter("idSite", siteId);
-            
-            return SendRequest<List<Uri>>("getSiteUrlsFromId", parameter);
+
+            return await SendRequestAsync<List<Uri>>("getSiteUrlsFromId", parameter);
         }
 
         /// <summary>
@@ -114,11 +115,11 @@ namespace Piwik.Analytics.NetCore.Modules
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public List<SiteInfoResult> GetSiteFromId(int id)
+        public async Task<List<SiteInfoResult>> GetSiteFromIdAsync(int id)
         {
             var parameter = new SimpleParameter("idSite", id);
 
-            return SendRequest<List<SiteInfoResult>>("getSiteFromId", parameter);
+            return await SendRequestAsync<List<SiteInfoResult>>("getSiteFromId", parameter);
         }
 
         /// <summary>
@@ -136,7 +137,7 @@ namespace Piwik.Analytics.NetCore.Modules
         /// <param name="group"></param>
         /// <param name="startDate"></param>
         /// <returns></returns>
-        public bool UpdateSite(
+        public async Task<bool> UpdateSiteAsync(
             int idSite,
             string siteName,
             string[] urls,
@@ -162,7 +163,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new DateParameter("startDate", startDate)
             };
 
-            return SendRequest<bool>("updateSite", parameters);
+            return await SendRequestAsync<bool>("updateSite", parameters);
         }
     }
 }
