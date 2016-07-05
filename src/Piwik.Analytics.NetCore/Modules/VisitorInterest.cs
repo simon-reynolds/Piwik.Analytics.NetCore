@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Piwik.Analytics.NetCore.Date;
 using Piwik.Analytics.NetCore.Parameters;
 using Piwik.Analytics.NetCore.Results;
@@ -14,7 +15,7 @@ namespace Piwik.Analytics.NetCore.Modules
             return PLUGIN;
         }
 
-        public List<VisitsPerPage> GetNumberOfVisitsPerPage(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null)
+        public async Task<List<VisitsPerPage>> GetNumberOfVisitsPerPageAsync(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null)
         {
             Parameter[] parameters =
             {
@@ -24,10 +25,10 @@ namespace Piwik.Analytics.NetCore.Modules
                 new SimpleParameter("segment", segment)
             };
 
-            return SendRequest<List<VisitsPerPage>>("getNumberOfVisitsPerPage", parameters);
+            return await SendRequestAsync<List<VisitsPerPage>>("getNumberOfVisitsPerPage", parameters);
         }
 
-        public List<VisitsPerVisitCount> GetNumberOfVisitsByVisitCount(int idSite, PiwikPeriod period, IPiwikDate date,
+        public async Task<List<VisitsPerVisitCount>> GetNumberOfVisitsByVisitCountAsync(int idSite, PiwikPeriod period, IPiwikDate date,
             string segment = null)
         {
             Parameter[] parameters =
@@ -38,7 +39,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new SimpleParameter("segment", segment)
             };
 
-            return SendRequest<List<VisitsPerVisitCount>>("getNumberOfVisitsByVisitCount ", parameters);
+            return await SendRequestAsync<List<VisitsPerVisitCount>>("getNumberOfVisitsByVisitCount ", parameters);
         }
     }
 }

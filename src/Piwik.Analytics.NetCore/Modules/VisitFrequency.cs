@@ -4,6 +4,7 @@
 
 #endregion
 
+using System.Threading.Tasks;
 using Piwik.Analytics.NetCore.Date;
 using Piwik.Analytics.NetCore.Parameters;
 using Piwik.Analytics.NetCore.Results;
@@ -31,7 +32,7 @@ namespace Piwik.Analytics.NetCore.Modules
             return PLUGIN;
         }
 
-        public VisitFrequencyResult Get(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null)
+        public async Task<VisitFrequencyResult> GetAsync(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null)
         {
             Parameter[] parameters =
             {
@@ -41,7 +42,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new SimpleParameter("segment", segment)
             };
 
-            return SendRequest<VisitFrequencyResult>("get", parameters);
+            return await SendRequestAsync<VisitFrequencyResult>("get", parameters);
         }
     }
 }

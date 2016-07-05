@@ -53,7 +53,7 @@ namespace Piwik.Analytics.NetCore
 
         protected abstract string GetPlugin();
 
-        protected T SendRequest<T>(string method, params Parameter[] parameters)
+        protected async Task<T> SendRequestAsync<T>(string method, params Parameter[] parameters)
         {
             if (Url == null)
             {
@@ -67,7 +67,7 @@ namespace Piwik.Analytics.NetCore
             
             var uri = BuildUri(method, parameters);
 
-            var response = GetResponse(uri).Result;
+            var response = await GetResponse(uri);
 
             var deserializedObject = JsonConvert.DeserializeObject<T>(response);
 

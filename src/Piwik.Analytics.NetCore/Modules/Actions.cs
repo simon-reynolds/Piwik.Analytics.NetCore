@@ -5,6 +5,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Piwik.Analytics.NetCore.Date;
 using Piwik.Analytics.NetCore.Parameters;
 using Piwik.Analytics.NetCore.Results;
@@ -32,7 +33,7 @@ namespace Piwik.Analytics.NetCore.Modules
             return PLUGIN;
         }
 
-        public List<ActionResult> GetPageUrls(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null)
+        public async Task<List<ActionResult>> GetPageUrlsAsync(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null)
         {
             Parameter[] parameters =
             {
@@ -42,11 +43,11 @@ namespace Piwik.Analytics.NetCore.Modules
                 new SimpleParameter("segment", segment)
             };
 
-            return SendRequest<List<ActionResult>>("getPageUrls", parameters);
+            return await SendRequestAsync<List<ActionResult>>("getPageUrls", parameters);
 
         }
 
-        public List<ActionResult> GetPageTitles(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null)
+        public async Task<List<ActionResult>> GetPageTitlesAsync(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null)
         {
             Parameter[] parameters =
             {
@@ -56,7 +57,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new SimpleParameter("segment", segment)
             };
 
-            return SendRequest<List<ActionResult>>("getPageTitles", parameters);
+            return await SendRequestAsync<List<ActionResult>>("getPageTitles", parameters);
         }
     }
 }
