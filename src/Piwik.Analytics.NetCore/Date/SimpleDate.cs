@@ -5,9 +5,9 @@
 #endregion
 
 using System;
-using Piwik.Analytics.NetCore.Parameters;
+using Piwik.NETCore.Analytics.Parameters;
 
-namespace Piwik.Analytics.NetCore.Date
+namespace Piwik.NETCore.Analytics.Date
 {
     public class SimpleDate : IPiwikDate
     {

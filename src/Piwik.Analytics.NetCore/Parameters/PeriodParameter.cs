@@ -4,9 +4,9 @@
 
 #endregion
 
-using Piwik.Analytics.NetCore.Date;
+using Piwik.NETCore.Analytics.Date;
 
-namespace Piwik.Analytics.NetCore.Parameters
+namespace Piwik.NETCore.Analytics.Parameters
 {
     internal class PeriodParameter : Parameter
     {

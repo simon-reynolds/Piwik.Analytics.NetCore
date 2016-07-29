@@ -6,7 +6,7 @@
 
 using System.Collections.Generic;
 
-namespace Piwik.Analytics.NetCore.Parameters
+namespace Piwik.NETCore.Analytics.Parameters
 {
     internal class DictionaryParameter : Parameter
     {

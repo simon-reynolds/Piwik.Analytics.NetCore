@@ -4,7 +4,7 @@
 
 #endregion
 
-namespace Piwik.Analytics.NetCore.Date
+namespace Piwik.NETCore.Analytics.Date
 {
     public class MagicDate : IPiwikDate
     {

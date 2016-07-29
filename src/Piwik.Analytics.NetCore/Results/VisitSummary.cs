@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Piwik.Analytics.NetCore.Results
+namespace Piwik.NETCore.Analytics.Results
 {
     public class VisitSummary
     {

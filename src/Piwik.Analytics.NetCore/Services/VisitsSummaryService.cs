@@ -1,17 +1,27 @@
-﻿using System.Threading.Tasks;
-using Piwik.Analytics.NetCore.Date;
-using Piwik.Analytics.NetCore.Parameters;
-using Piwik.Analytics.NetCore.Results;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Piwik.NETCore.Analytics.Date;
+using Piwik.NETCore.Analytics.Parameters;
+using Piwik.NETCore.Analytics.Results;
 
-namespace Piwik.Analytics.NetCore.Modules
+namespace Piwik.NETCore.Analytics.Services
 {
-    public class VisitsSummary : PiwikAnalytics
+    public interface IVisitsSummaryService :IService
     {
-        private const string PLUGIN = "VisitsSummary";
+        Task<VisitSummary> GetAsync(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null, string columns = null);
+        Task<TotalVisits> GetVisitsAsync(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null);
+        Task<UniqueVisitors> GetUniqueVisitorsAsync(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null);
+    }
 
-        protected override string GetPlugin()
+    public class VisitsSummaryService : AbstractService<IVisitsSummaryService>, IVisitsSummaryService
+    {
+        protected override PiwikAnalyticsClient Client { get; }
+
+        public override string ServiceName { get; } = "VisitsSummary";
+
+        public VisitsSummaryService(PiwikAnalyticsClient client)
         {
-            return PLUGIN;
+            Client = client;
         }
 
         public async Task<VisitSummary> GetAsync(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null,
@@ -26,7 +36,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new SimpleParameter("columns", columns)
             };
 
-            return await SendRequestAsync<VisitSummary>("get", parameters);
+            return await ExecuteRequestAsync<VisitSummary>("get", parameters);
         }
 
         public async Task<TotalVisits> GetVisitsAsync(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null)
@@ -39,7 +49,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new SimpleParameter("segment", segment)
             };
 
-            return await SendRequestAsync<TotalVisits>("getVisits", parameters);
+            return await ExecuteRequestAsync<TotalVisits>("getVisits", parameters);
         }
 
         public async Task<UniqueVisitors> GetUniqueVisitorsAsync(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null)
@@ -52,7 +62,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new SimpleParameter("segment", segment)
             };
 
-            return await SendRequestAsync<UniqueVisitors>("getUniqueVisitors", parameters);
+            return await ExecuteRequestAsync<UniqueVisitors>("getUniqueVisitors", parameters);
         }
     }
 }

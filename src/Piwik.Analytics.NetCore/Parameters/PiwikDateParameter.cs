@@ -1,12 +1,6 @@
-﻿#region license
+﻿using Piwik.NETCore.Analytics.Date;
 
-// http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
-
-#endregion
-
-using Piwik.Analytics.NetCore.Date;
-
-namespace Piwik.Analytics.NetCore.Parameters
+namespace Piwik.NETCore.Analytics.Parameters
 {
     internal class PiwikDateParameter : Parameter
     {

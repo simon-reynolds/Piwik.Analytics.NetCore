@@ -6,7 +6,7 @@
 
 using System.Text.Encodings.Web;
 
-namespace Piwik.Analytics.NetCore.Parameters
+namespace Piwik.NETCore.Analytics.Parameters
 {
     public abstract class Parameter
     {

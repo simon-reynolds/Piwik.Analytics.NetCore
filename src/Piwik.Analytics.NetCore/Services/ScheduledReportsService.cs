@@ -1,34 +1,17 @@
-﻿#region license
-
-// http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
-
-#endregion
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Piwik.Analytics.NetCore.Date;
-using Piwik.Analytics.NetCore.Parameters;
+using Piwik.NETCore.Analytics.Date;
+using Piwik.NETCore.Analytics.Parameters;
 
 /// <summary>
 /// Piwik - Open source web analytics
 /// For more information, see http://piwik.org
 /// </summary>
 
-namespace Piwik.Analytics.NetCore.Modules
+namespace Piwik.NETCore.Analytics.Services
 {
     /// <summary>
-    ///     Service Gateway for Piwik ScheduledReports Module API
-    ///     For more information, see http://piwik.org/docs/analytics-api/reference
-    /// </summary>
-    /// <remarks>
-    ///     This Analytics API is tested against Piwik 2.13.1
-    ///     Implementation missing for ScheduledReports.getReports, ScheduledReports.generateReport and
-    ///     ScheduledReports.sendReport
-    /// </remarks>
-    public class ScheduledReports : PiwikAnalytics
-    {
-        /// <summary>
         ///     The format of the scheduled report
         /// </summary>
         public enum ReportFormat
@@ -112,11 +95,52 @@ namespace Piwik.Analytics.NetCore.Modules
             VisitsSummary_get
         }
 
-        private const string PLUGIN = "ScheduledReports";
+    public interface IScheduledReportsService : IService
+    {
+        Task<int> AddReportAsync(
+            int idSite,
+            string description,
+            PiwikPeriod period,
+            int hour,
+            ReportType reportType,
+            ReportFormat reportFormat,
+            List<Statistic> includedStatistics,
+            bool emailMe,
+            string[] additionalEmails = null);
 
-        protected override string GetPlugin()
+        Task<bool> UpdateReportAsync(
+            int idReport,
+            int idSite,
+            string description,
+            PiwikPeriod period,
+            int hour,
+            ReportType reportType,
+            ReportFormat reportFormat,
+            List<Statistic> includedStatistics,
+            bool emailMe,
+            string[] additionalEmails = null);
+
+        Task<bool> DeleteReportAsync(int idReport);
+    }
+
+    /// <summary>
+    ///     Service Gateway for Piwik ScheduledReports Module API
+    ///     For more information, see http://piwik.org/docs/analytics-api/reference
+    /// </summary>
+    /// <remarks>
+    ///     This Analytics API is tested against Piwik 2.13.1
+    ///     Implementation missing for ScheduledReports.getReports, ScheduledReports.generateReport and
+    ///     ScheduledReports.sendReport
+    /// </remarks>
+    public class ScheduledReportsService : AbstractService<IScheduledReportsService>, IScheduledReportsService
+    {
+        protected override PiwikAnalyticsClient Client { get; }
+
+        public override string ServiceName { get; } = "ScheduledReports";
+
+        public ScheduledReportsService(PiwikAnalyticsClient client)
         {
-            return PLUGIN;
+            Client = client;
         }
 
         /// <summary>
@@ -163,7 +187,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new DictionaryParameter("parameters", additionalParameters)
             };
 
-            return await SendRequestAsync<int>("addReport", p);
+            return await ExecuteRequestAsync<int>("addReport", p);
         }
 
         /// <summary>
@@ -213,7 +237,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new DictionaryParameter("parameters", additionalParameters)
             };
 
-            return await SendRequestAsync<bool>("updateReport", p);
+            return await ExecuteRequestAsync<bool>("updateReport", p);
         }
 
         /// <summary>
@@ -228,7 +252,7 @@ namespace Piwik.Analytics.NetCore.Modules
                 new SimpleParameter("idReport", idReport)
             };
 
-            return await SendRequestAsync<bool>("deleteReport", parameters);
+            return await ExecuteRequestAsync<bool>("deleteReport", parameters);
         }
     }
 }

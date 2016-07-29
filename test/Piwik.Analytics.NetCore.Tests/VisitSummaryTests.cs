@@ -1,19 +1,17 @@
 using System.Threading.Tasks;
-using Piwik.Analytics.NetCore.Date;
-using Piwik.Analytics.NetCore.Modules;
+using Piwik.NETCore.Analytics.Date;
 using Xunit;
 
-namespace Piwik.Analytics.NetCore.Tests
+namespace Piwik.NETCore.Analytics.Tests
 {
     public class VisitSummaryTests
     {
         [Fact]
         public async Task GetSuccessfullyParsesRepsonse()
         {
-            PiwikInitialization.Initialize();
+            var client = PiwikInitialization.Initialize();
 
-            var visitSummary = new VisitsSummary();
-            var result = await visitSummary.GetAsync(7, PiwikPeriod.Month, MagicDate.Yesterday);
+            var result = await client.VisitsSummaryService.GetAsync(7, PiwikPeriod.Month, MagicDate.Yesterday);
 
             Assert.True(result != null);
             Assert.True(result.Actions > 0);
@@ -22,10 +20,9 @@ namespace Piwik.Analytics.NetCore.Tests
         [Fact]
         public async Task GetUniqueVisitorsSuccessfullyParsesRepsonse()
         {
-            PiwikInitialization.Initialize();
+            var client = PiwikInitialization.Initialize();
 
-            var visitSummary = new VisitsSummary();
-            var result = await visitSummary.GetUniqueVisitorsAsync(7, PiwikPeriod.Month, MagicDate.Yesterday);
+            var result = await client.VisitsSummaryService.GetUniqueVisitorsAsync(7, PiwikPeriod.Month, MagicDate.Yesterday);
 
             Assert.True(result != null);
             Assert.True(result.Visits > 0);
@@ -34,10 +31,9 @@ namespace Piwik.Analytics.NetCore.Tests
         [Fact]
         public async Task GetVisitsSuccessfullyParsesRepsonse()
         {
-            PiwikInitialization.Initialize();
+            var client = PiwikInitialization.Initialize();
 
-            var visitSummary = new VisitsSummary();
-            var result = await visitSummary.GetVisitsAsync(7, PiwikPeriod.Month, MagicDate.Yesterday);
+            var result = await client.VisitsSummaryService.GetVisitsAsync(7, PiwikPeriod.Month, MagicDate.Yesterday);
 
             Assert.True(result != null);
             Assert.True(result.Visits > 0);

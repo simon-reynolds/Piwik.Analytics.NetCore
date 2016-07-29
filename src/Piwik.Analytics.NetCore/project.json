@@ -20,7 +20,8 @@
     "NETStandard.Library": "1.6.0",
     "Newtonsoft.Json": "8.0.4-beta1",
     "System.Net.Http": "4.1.0",
-    "System.Text.Encodings.Web" : "4.0.0"
+    "System.Text.Encodings.Web" : "4.0.0",
+    "Microsoft.AspNetCore.WebUtilities": "1.0.0"
   },
   "frameworks":{
       "netstandard1.6":{

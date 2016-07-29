@@ -6,7 +6,7 @@
 
 using System;
 
-namespace Piwik.Analytics.NetCore
+namespace Piwik.NETCore.Analytics
 {
     public class PiwikApiException : Exception
     {

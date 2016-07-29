@@ -4,7 +4,7 @@
 
 #endregion
 
-namespace Piwik.Analytics.NetCore.Parameters
+namespace Piwik.NETCore.Analytics.Parameters
 {
     public class ReferrerTypeParameter : Parameter
     {
