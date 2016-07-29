@@ -1,10 +1,4 @@
-﻿#region license
-
-// http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
-
-#endregion
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Piwik.NETCore.Analytics.Parameters
 {

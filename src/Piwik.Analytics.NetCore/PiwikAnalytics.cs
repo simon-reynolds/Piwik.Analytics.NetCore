@@ -1,22 +1,11 @@
-#region license
-
-// http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
-
-#endregion
-
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Piwik.Analytics.NetCore.Parameters;
+using Piwik.NETCore.Analytics.Services;
 
-namespace Piwik.Analytics.NetCore
+namespace Piwik.NETCore.Analytics
 {
-    public abstract class PiwikAnalytics
+    public class PiwikAnalytics
     {
-        public static void Initialize(string url, string tokenAuth)
+        public static PiwikAnalytics CreateClient(string url, string tokenAuth)
         {
             if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
             {
@@ -28,10 +17,10 @@ namespace Piwik.Analytics.NetCore
                 throw new ArgumentException(nameof(tokenAuth), @"tokenAuth cannot be empty");
             }
             
-            Initialize(new Uri(url), tokenAuth);
+            return CreateClient(new Uri(url), tokenAuth);
         }
         
-        public static void Initialize(Uri uri, string tokenAuth)
+        public static PiwikAnalytics CreateClient(Uri uri, string tokenAuth)
         {
             if (uri == null)
             {
@@ -43,71 +32,89 @@ namespace Piwik.Analytics.NetCore
                 throw new ArgumentException(nameof(tokenAuth), @"tokenAuth cannot be empty");
             }
             
-            Url = uri;
-            _tokenAuth = tokenAuth;
+            return new PiwikAnalytics(uri, tokenAuth);
         }
         
-        public static Uri Url { get; private set; }
-        
-        private static string _tokenAuth;
+        public Uri Uri { get; }
 
-        protected abstract string GetPlugin();
+        private ServiceLocator _services { get; }
+        private PiwikAnalyticsClient _client { get; }
 
-        protected async Task<T> SendRequestAsync<T>(string method, params Parameter[] parameters)
+        private PiwikAnalytics(Uri uri, string tokenAuth)
         {
-            if (Url == null)
-            {
-                throw new ArgumentException(nameof(Url), @"Url cannot be null");
-            }
+            Uri = uri;
             
-            if (string.IsNullOrWhiteSpace(_tokenAuth))
-            {
-                throw new ArgumentException(nameof(_tokenAuth), @"tokenAuth cannot be empty");
-            }
-            
-            var uri = BuildUri(method, parameters);
+            _client = new PiwikAnalyticsClient(uri, tokenAuth);
+            _services = new ServiceLocator();
+            RegisterServices();
 
-            var response = await GetResponse(uri);
-
-            var deserializedObject = JsonConvert.DeserializeObject<T>(response);
-
-            if (deserializedObject == null)
-            {
-                throw new PiwikApiException(
-                    "The server response is not deserializable. " +
-                    "Please contact the developer with the following details : response = " + response
-                    );
-            }
-
-            return deserializedObject;
         }
-        
-        private Uri BuildUri(string method, IEnumerable<Parameter> parameters)
+
+        public void RegisterServices()
         {
-            var uriBuilder = new UriBuilder(Url);
-
-            var defaultParameters = new List<Parameter>
-            {
-                new SimpleParameter("module", "API"),
-                new SimpleParameter("format", "json"),
-                new SimpleParameter("token_auth", _tokenAuth),
-                new SimpleParameter("method", GetPlugin() + "." + method)
-            };
-
-            parameters = parameters.Union(defaultParameters).ToList();
-
-            var queryString = parameters.Aggregate(string.Empty, (current, parameter) => current + parameter.Serialize());
-
-            uriBuilder.Query = queryString;
-
-            return uriBuilder.Uri;
+            _services.Register<IActionsService>(() => new ActionsService(_client));
+            _services.Register<IReferrersService>(() => new ReferrersService(_client));
+            _services.Register<IScheduledReportsService>(() => new ScheduledReportsService(_client));
+            _services.Register<ISitesManagerService>(() => new SitesManagerService(_client));
+            _services.Register<IVisitFrequencyService>(() => new VisitFrequencyService(_client));
+            _services.Register<IVisitorInterestService>(() => new VisitorInterestService(_client));
+            _services.Register<IVisitsSummaryService>(() => new VisitsSummaryService(_client));
         }
-        
-        private static async Task<string> GetResponse(Uri uri)
+
+        public IActionsService ActionsService
         {
-            var wc = new HttpClient();
-            var response = await wc.GetStringAsync(uri);
-            return response;
+            get
+            {
+                return _services.Get<IActionsService>();
+            }
+        }
+
+        public IReferrersService ReferrersService
+        {
+            get
+            {
+                return _services.Get<IReferrersService>();
+            }
+        }
+
+        public IScheduledReportsService ScheduledReportsService
+        {
+            get
+            {
+                return _services.Get<IScheduledReportsService>();
+            }
+        }
+
+        public ISitesManagerService SitesManagerService
+        {
+            get
+            {
+                return _services.Get<ISitesManagerService>();
+            }
+        }
+
+        public IVisitFrequencyService VisitFrequencyService
+        {
+            get
+            {
+                return _services.Get<IVisitFrequencyService>();
+            }
+        }
+
+        public IVisitorInterestService VisitorInterestService
+        {
+            get
+            {
+                return _services.Get<IVisitorInterestService>();
+            }
+        }
+
+        public IVisitsSummaryService VisitsSummaryService
+        {
+            get
+            {
+                return _services.Get<IVisitsSummaryService>();
+            }
         }
     }
 }

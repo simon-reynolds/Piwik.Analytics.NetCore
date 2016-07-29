@@ -184,5 +184,4 @@ namespace Piwik.NETCore.Analytics.Services
             return await ExecuteRequestAsync<bool>("updateSite", parameters);
         }
     }
-    }
 }

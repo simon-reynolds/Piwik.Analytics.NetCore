@@ -4,11 +4,6 @@ using System.Threading.Tasks;
 using Piwik.NETCore.Analytics.Date;
 using Piwik.NETCore.Analytics.Parameters;
 
-/// <summary>
-/// Piwik - Open source web analytics
-/// For more information, see http://piwik.org
-/// </summary>
-
 namespace Piwik.NETCore.Analytics.Services
 {
     /// <summary>

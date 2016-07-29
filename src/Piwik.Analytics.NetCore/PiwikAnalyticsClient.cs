@@ -5,28 +5,16 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Piwik.NETCore.Analytics.Parameters;
-using Piwik.NETCore.Analytics.Services;
 
 namespace Piwik.NETCore.Analytics
 {
     public class PiwikAnalyticsClient
     {
-        public static PiwikAnalyticsClient CreateClient(string url, string tokenAuth)
-        {
-            if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
-            {
-                throw new ArgumentException(nameof(url), @"url must be well formed");
-            }
-            
-            if (string.IsNullOrWhiteSpace(tokenAuth))
-            {
-                throw new ArgumentException(nameof(tokenAuth), @"tokenAuth cannot be empty");
-            }
+        public Uri Uri { get; }
+        private string _tokenAuth { get; }
+        private ServiceLocator _services { get; }
 
-            return CreateClient(new Uri(url), tokenAuth);
-        }
-
-        public static PiwikAnalyticsClient CreateClient(Uri uri, string tokenAuth)
+        public PiwikAnalyticsClient(Uri uri, string tokenAuth)
         {
             if (uri == null)
             {
@@ -37,40 +25,9 @@ namespace Piwik.NETCore.Analytics
             {
                 throw new ArgumentException(nameof(tokenAuth), @"tokenAuth cannot be empty");
             }
-            
-            return new PiwikAnalyticsClient(uri, tokenAuth);
-        }
 
-        public Uri Uri { get; }
-        private string _tokenAuth { get; }
-        private ServiceLocator _services { get; }
-
-        private PiwikAnalyticsClient(Uri uri, string tokenAuth)
-        {
             Uri = uri;
             _tokenAuth = tokenAuth;
-            
-            _services = new ServiceLocator();
-            RegisterServices();
-        }
-
-        public void RegisterServices()
-        {
-            _services.Register<IActionsService>(() => new ActionsService(this));
-            _services.Register<IReferrersService>(() => new ReferrersService(this));
-            _services.Register<IScheduledReportsService>(() => new ScheduledReportsService(this));
-            _services.Register<ISitesManagerService>(() => new SitesManagerService(this));
-            _services.Register<IVisitFrequencyService>(() => new VisitFrequencyService(this));
-            _services.Register<IVisitorInterestService>(() => new VisitorInterestService(this));
-            _services.Register<IVisitsSummaryService>(() => new VisitsSummaryService(this));
-        }
-
-        public IVisitsSummaryService VisitsSummaryService
-        {
-            get
-            {
-                return _services.Get<IVisitsSummaryService>();
-            }
         }
 
         public async Task<T> SendRequestAsync<T>(string service, string method, params Parameter[] parameters)

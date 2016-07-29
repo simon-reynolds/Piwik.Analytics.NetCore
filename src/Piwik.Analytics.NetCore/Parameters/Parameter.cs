@@ -1,10 +1,4 @@
-﻿#region license
-
-// http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
-
-#endregion
-
-using System.Text.Encodings.Web;
+﻿using System.Text.Encodings.Web;
 
 namespace Piwik.NETCore.Analytics.Parameters
 {

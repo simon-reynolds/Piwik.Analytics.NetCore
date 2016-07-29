@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Piwik.NETCore.Analytics.Date;
 using Piwik.NETCore.Analytics.Parameters;
