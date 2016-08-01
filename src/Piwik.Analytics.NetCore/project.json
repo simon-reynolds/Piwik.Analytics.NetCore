@@ -1,5 +1,5 @@
 {
-  "version": "0.3.0",
+  "version": "0.5.0",
   "title": "Piwik Analytics API for .NET Core",
   "description": "Piwik.Analytics.NetCore Class Library",
   "authors": [ "Simon Taite" ],
@@ -8,7 +8,7 @@
   "packOptions": {
     "summary": "Piwik Analytics API for .NET Core, built against Piwik 2.16",
     "releaseNotes": "Built against Piwik 2.16",
-    "tags": ["piwik analytics api"],
+    "tags": ["piwik analytics api net core"],
     "projectUrl": "https://github.com/simontaite/Piwik.Analytics.NetCore",
     "licenseUrl": "https://raw.githubusercontent.com/simontaite/Piwik.Analytics.NetCore/master/LICENSE",
     "requireLicenseAcceptance": false  
