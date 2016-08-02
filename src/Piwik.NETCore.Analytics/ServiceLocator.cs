@@ -3,7 +3,13 @@ using System.Collections.Concurrent;
 
 namespace Piwik.NETCore.Analytics
 {
-    public class ServiceLocator
+    public interface IServiceLocator
+    {
+        void Register<TService>(Func<TService> factory);
+        TService Get<TService>();
+    }
+
+    internal class ServiceLocator : IServiceLocator
     {
         private readonly ConcurrentDictionary<Type, object> _factories;
 

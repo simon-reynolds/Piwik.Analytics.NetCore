@@ -3,22 +3,17 @@ using System.Threading.Tasks;
 using Piwik.NETCore.Analytics.Date;
 using Piwik.NETCore.Analytics.Parameters;
 using Piwik.NETCore.Analytics.Results;
+using Piwik.NETCore.Analytics.Services;
 
-namespace Piwik.NETCore.Analytics.Services
+namespace Piwik.NETCore.Analytics.ServicesImpl
 {
-    public interface IReferrersService : IService
+    internal class ReferrersService : AbstractService<IReferrersService>, IReferrersService
     {
-        Task<List<ReferrerType>> GetReferrerType(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null, ReferrerType referrerType = null);
-        Task<List<ReferrerWesbite>> GetWebsitesAsync(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null, bool expanded = false);
-    }
-
-    public class ReferrersService : AbstractService<IReferrersService>, IReferrersService
-    {
-        protected override PiwikAnalyticsClient Client { get; }
+        internal override IPiwikAnalyticsClient Client { get; }
 
         public override string ServiceName { get; } = "Referers"; // API name is misspelt, this is not a typo
 
-        public ReferrersService(PiwikAnalyticsClient client)
+        internal ReferrersService(IPiwikAnalyticsClient client)
         {
             Client = client;
         }

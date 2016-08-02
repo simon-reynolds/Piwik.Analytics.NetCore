@@ -8,11 +8,16 @@ using Piwik.NETCore.Analytics.Parameters;
 
 namespace Piwik.NETCore.Analytics
 {
-    public class PiwikAnalyticsClient
+    public interface IPiwikAnalyticsClient
+    {
+        Uri Uri { get; }
+        Task<T> ExecuteRequestAsync<T>(string service, string method, params Parameter[] parameters);
+    }
+
+    internal class PiwikAnalyticsClient : IPiwikAnalyticsClient
     {
         public Uri Uri { get; }
         private string _tokenAuth { get; }
-        private ServiceLocator _services { get; }
 
         public PiwikAnalyticsClient(Uri uri, string tokenAuth)
         {
@@ -30,7 +35,7 @@ namespace Piwik.NETCore.Analytics
             _tokenAuth = tokenAuth;
         }
 
-        public async Task<T> SendRequestAsync<T>(string service, string method, params Parameter[] parameters)
+        public async Task<T> ExecuteRequestAsync<T>(string service, string method, params Parameter[] parameters)
         {
             if (Uri == null)
             {

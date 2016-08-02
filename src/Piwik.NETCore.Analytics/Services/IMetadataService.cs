@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Piwik.NETCore.Analytics.Date;
-using Piwik.NETCore.Analytics.Parameters;
-using Piwik.NETCore.Analytics.Results;
 
 namespace Piwik.NETCore.Analytics.Services
 {
@@ -23,62 +18,5 @@ namespace Piwik.NETCore.Analytics.Services
         Task<object> GetSuggestedValuesForSegmentAsync(string segmentName, int idSite);
         Task<object> GetGlossaryReportsAsync(int idSite);
         Task<object> GetGlossaryMetricsAsync(int idSite);
-    }
-
-    public class MetadataService : AbstractService<IMetadataService>, IMetadataService
-    {
-        protected override PiwikAnalyticsClient Client { get; }
-
-        public override string ServiceName { get; } = "API";
-
-        public MetadataService(PiwikAnalyticsClient client)
-        {
-            Client = client;
-        }
-
-        public Task<object> GetPiwikVersionAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<object> GetIpFromHeaderAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<object> GetSettingsAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<object> GetSegmentsMetadataAsync(int[] idSites)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<object> GetBulkRequestAsync(string[] urls)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<object> IsPluginActivatedAsync(string pluginName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<object> GetSuggestedValuesForSegmentAsync(string segmentName, int idSite)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<object> GetGlossaryReportsAsync(int idSite)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<object> GetGlossaryMetricsAsync(int idSite)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

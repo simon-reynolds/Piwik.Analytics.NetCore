@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.WebUtilities;
 
 namespace Piwik.NETCore.Analytics
 {
-    public static class PiwikRequestBuilder
+    internal static class PiwikRequestBuilder
     {
-        public static Uri AddQuery(this Uri uri, string name, string value)
+        internal static Uri AddQuery(this Uri uri, string name, string value)
         {
             var ub = new UriBuilder(uri);
 

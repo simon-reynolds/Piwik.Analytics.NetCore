@@ -2,24 +2,21 @@ using System.Threading.Tasks;
 using Piwik.NETCore.Analytics.Date;
 using Piwik.NETCore.Analytics.Parameters;
 using Piwik.NETCore.Analytics.Results;
+using Piwik.NETCore.Analytics.Services;
 
-namespace Piwik.NETCore.Analytics.Services
+namespace Piwik.NETCore.Analytics.ServicesImpl
 {
-    public interface IVisitFrequencyService :IService
+    internal class VisitFrequencyService : AbstractService<IVisitFrequencyService>, IVisitFrequencyService
     {
-       Task<VisitFrequencyResult> GetAsync(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null);
-    }
-
-    public class VisitFrequencyService : AbstractService<IVisitFrequencyService>, IVisitFrequencyService
-    {
-        protected override PiwikAnalyticsClient Client { get; }
+        internal override IPiwikAnalyticsClient Client { get; }
 
         public override string ServiceName { get; } = "VisitFrequency";
 
-        public VisitFrequencyService(PiwikAnalyticsClient client)
+        internal VisitFrequencyService(IPiwikAnalyticsClient client)
         {
             Client = client;
         }
+        
         public async Task<VisitFrequencyResult> GetAsync(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null)
         {
             Parameter[] parameters =

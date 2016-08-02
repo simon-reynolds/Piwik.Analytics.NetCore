@@ -3,121 +3,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Piwik.NETCore.Analytics.Date;
 using Piwik.NETCore.Analytics.Parameters;
+using Piwik.NETCore.Analytics.Reports;
+using Piwik.NETCore.Analytics.Services;
 
-namespace Piwik.NETCore.Analytics.Services
+namespace Piwik.NETCore.Analytics.ServicesImpl
 {
-    /// <summary>
-        ///     The format of the scheduled report
-        /// </summary>
-        public enum ReportFormat
-        {
-            html,
-            pdf,
-            csv
-        }
-
-        /// <summary>
-        ///     The type of the scheduled report
-        /// </summary>
-        public enum ReportType
-        {
-            email,
-            mobile
-        }
-
-        /// <summary>
-        ///     Enum of all available report statistics
-        /// </summary>
-        public enum Statistic
-        {
-            Actions_get,
-            Actions_getDownloads,
-            Actions_getEntryPageTitles,
-            Actions_getEntryPageUrls,
-            Actions_getExitPageTitles,
-            Actions_getExitPageUrls,
-            Actions_getOutlinks,
-            Actions_getPageTitles,
-            Actions_getPageTitlesFollowingSiteSearch,
-            Actions_getPageUrls,
-            Actions_getPageUrlsFollowingSiteSearch,
-            Actions_getSiteSearchCategories,
-            Actions_getSiteSearchKeywords,
-            Actions_getSiteSearchNoResultKeywords,
-            Contents_getContentNames,
-            Contents_getContentPieces,
-            CustomVariables_getCustomVariables,
-            DevicePlugins_getPlugin,
-            DevicesDetection_getBrand,
-            DevicesDetection_getBrowserEngines,
-            DevicesDetection_getBrowserVersions,
-            DevicesDetection_getBrowsers,
-            DevicesDetection_getModel,
-            DevicesDetection_getOsFamilies,
-            DevicesDetection_getOsVersions,
-            DevicesDetection_getType,
-            Events_getAction,
-            Events_getCategory,
-            Events_getName,
-            Goals_get,
-            Goals_getDaysToConversion,
-            Goals_getVisitsUntilConversion,
-            MultiSites_getAll,
-            Provider_getProvider,
-            Referrers_getAll,
-            Referrers_getCampaigns,
-            Referrers_getKeywords,
-            Referrers_getReferrerType,
-            Referrers_getSearchEngines,
-            Referrers_getSocials,
-            Referrers_getWebsites,
-            Resolution_getConfiguration,
-            Resolution_getResolution,
-            UserCountry_getCity,
-            UserCountry_getContinent,
-            UserCountry_getCountry,
-            UserCountry_getRegion,
-            UserLanguage_getLanguage,
-            UserLanguage_getLanguageCode,
-            VisitFrequency_get,
-            VisitTime_getByDayOfWeek,
-            VisitTime_getVisitInformationPerLocalTime,
-            VisitTime_getVisitInformationPerServerTime,
-            VisitorInterest_getNumberOfVisitsByDaysSinceLast,
-            VisitorInterest_getNumberOfVisitsByVisitCount,
-            VisitorInterest_getNumberOfVisitsPerPage,
-            VisitorInterest_getNumberOfVisitsPerVisitDuration,
-            VisitsSummary_get
-        }
-
-    public interface IScheduledReportsService : IService
-    {
-        Task<int> AddReportAsync(
-            int idSite,
-            string description,
-            PiwikPeriod period,
-            int hour,
-            ReportType reportType,
-            ReportFormat reportFormat,
-            List<Statistic> includedStatistics,
-            bool emailMe,
-            string[] additionalEmails = null);
-
-        Task<bool> UpdateReportAsync(
-            int idReport,
-            int idSite,
-            string description,
-            PiwikPeriod period,
-            int hour,
-            ReportType reportType,
-            ReportFormat reportFormat,
-            List<Statistic> includedStatistics,
-            bool emailMe,
-            string[] additionalEmails = null);
-
-        Task<bool> DeleteReportAsync(int idReport);
-    }
-
     /// <summary>
     ///     Service Gateway for Piwik ScheduledReports Module API
     ///     For more information, see http://piwik.org/docs/analytics-api/reference
@@ -127,13 +17,13 @@ namespace Piwik.NETCore.Analytics.Services
     ///     Implementation missing for ScheduledReports.getReports, ScheduledReports.generateReport and
     ///     ScheduledReports.sendReport
     /// </remarks>
-    public class ScheduledReportsService : AbstractService<IScheduledReportsService>, IScheduledReportsService
+    internal class ScheduledReportsService : AbstractService<IScheduledReportsService>, IScheduledReportsService
     {
-        protected override PiwikAnalyticsClient Client { get; }
+        internal override IPiwikAnalyticsClient Client { get; }
 
         public override string ServiceName { get; } = "ScheduledReports";
 
-        public ScheduledReportsService(PiwikAnalyticsClient client)
+        internal ScheduledReportsService(IPiwikAnalyticsClient client)
         {
             Client = client;
         }

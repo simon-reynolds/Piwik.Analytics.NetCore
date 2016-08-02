@@ -1,7 +1,7 @@
 {
   "version": "0.5.0",
   "title": "Piwik Analytics API for .NET Core",
-  "description": "Piwik.Analytics.NetCore Class Library",
+  "description": "Piwik.NETCore.Analytics Class Library",
   "authors": [ "Simon Taite" ],
   "language": "en-US",
   "copyright": "GLP v3",  

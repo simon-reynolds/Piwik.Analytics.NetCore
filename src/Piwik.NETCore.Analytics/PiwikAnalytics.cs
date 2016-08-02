@@ -1,5 +1,6 @@
 using System;
 using Piwik.NETCore.Analytics.Services;
+using Piwik.NETCore.Analytics.ServicesImpl;
 
 namespace Piwik.NETCore.Analytics
 {
@@ -37,28 +38,27 @@ namespace Piwik.NETCore.Analytics
         
         public Uri Uri { get; }
 
-        private ServiceLocator _services { get; }
-        private PiwikAnalyticsClient _client { get; }
+        private IServiceLocator _services { get; }
 
         private PiwikAnalytics(Uri uri, string tokenAuth)
         {
             Uri = uri;
             
-            _client = new PiwikAnalyticsClient(uri, tokenAuth);
+            var client = new PiwikAnalyticsClient(uri, tokenAuth);
             _services = new ServiceLocator();
-            RegisterServices();
+            RegisterServices(_services, client);
 
         }
 
-        public void RegisterServices()
+        private static void RegisterServices(IServiceLocator services, IPiwikAnalyticsClient client)
         {
-            _services.Register<IActionsService>(() => new ActionsService(_client));
-            _services.Register<IReferrersService>(() => new ReferrersService(_client));
-            _services.Register<IScheduledReportsService>(() => new ScheduledReportsService(_client));
-            _services.Register<ISitesManagerService>(() => new SitesManagerService(_client));
-            _services.Register<IVisitFrequencyService>(() => new VisitFrequencyService(_client));
-            _services.Register<IVisitorInterestService>(() => new VisitorInterestService(_client));
-            _services.Register<IVisitsSummaryService>(() => new VisitsSummaryService(_client));
+            services.Register<IActionsService>(() => new ActionsService(client));
+            services.Register<IReferrersService>(() => new ReferrersService(client));
+            services.Register<IScheduledReportsService>(() => new ScheduledReportsService(client));
+            services.Register<ISitesManagerService>(() => new SitesManagerService(client));
+            services.Register<IVisitFrequencyService>(() => new VisitFrequencyService(client));
+            services.Register<IVisitorInterestService>(() => new VisitorInterestService(client));
+            services.Register<IVisitsSummaryService>(() => new VisitsSummaryService(client));
         }
 
         public IActionsService ActionsService

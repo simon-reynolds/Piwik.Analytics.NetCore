@@ -3,22 +3,17 @@ using System.Threading.Tasks;
 using Piwik.NETCore.Analytics.Date;
 using Piwik.NETCore.Analytics.Parameters;
 using Piwik.NETCore.Analytics.Results;
+using Piwik.NETCore.Analytics.Services;
 
-namespace Piwik.NETCore.Analytics.Services
+namespace Piwik.NETCore.Analytics.ServicesImpl
 {
-    public interface IVisitorInterestService :IService
+    internal class VisitorInterestService : AbstractService<IVisitorInterestService>, IVisitorInterestService
     {
-        Task<List<VisitsPerPage>> GetNumberOfVisitsPerPageAsync(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null);
-        Task<List<VisitsPerVisitCount>> GetNumberOfVisitsByVisitCountAsync(int idSite, PiwikPeriod period, IPiwikDate date, string segment = null);
-    }
-
-    public class VisitorInterestService : AbstractService<IVisitorInterestService>, IVisitorInterestService
-    {
-        protected override PiwikAnalyticsClient Client { get; }
+        internal override IPiwikAnalyticsClient Client { get; }
 
         public override string ServiceName { get; } = "VisitorInterest";
 
-        public VisitorInterestService(PiwikAnalyticsClient client)
+        internal VisitorInterestService(IPiwikAnalyticsClient client)
         {
             Client = client;
         }
